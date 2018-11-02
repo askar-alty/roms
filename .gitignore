@@ -1,6 +1,8 @@
 # Environments
 webapp
-
+*/__pycache__
+*/*/__pycache__
+*/*/*/__pycache__
 # Idea
 .idea
 
