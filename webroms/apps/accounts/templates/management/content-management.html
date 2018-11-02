@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Администрирование{% endblock %}
+{% block content %}
+<div class="row" xmlns="http://www.w3.org/1999/html">
+    <div class="col-md-5">
+        <div class="container">
+            <h3>Администрирование</h3>
+        </div>
+        <table class="table">
+            <tbody>
+            {% if user.employee.is_admin or user.is_superuser %}
+            <tr>
+                <th>Управление меню</th>
+            </tr>
+            <tr>
+                <td><a href="{% url 'categories' %}">Категории</a></td>
+                <td><a href="{% url 'create_category' %}">Добавить</a></td>
+            </tr>
+            <tr>
+                <td><a href="{% url 'dishes' %}">Блюды в меню</a></td>
+                <td><a href="{% url 'create_dish' %}">Добавить</a></td>
+            </tr>
+            {% endif %}
+            <tr></tr>
+            <tr>
+                <th>Управление заказами</th>
+            </tr>
+            <tr>
+                <td><a href="{% url 'dish_items' %}">Блюды к заказу</a></td>
+                <td><a href="{% url 'create_dish_item' %}">Добавить</a></td>
+            </tr>
+            <tr>
+                <td><a href="{% url 'orders' %}">Заказы</a></td>
+                <td><a href="{% url 'create_order' %}">Добавить</a></td>
+            </tr>
+            <tr></tr>
+            {% if user.employee.is_admin or user.is_superuser %}
+            <tr>
+                <th>Управление профилями сотрудников</th>
+            </tr>
+            <tr>
+                <td><a href="{% url 'employees' %}">Сотрудники</a></td>
+                <td><a href="{% url 'create_employee' %}">Добавить</a></td>
+            </tr>
+            <tr>
+                <td><a href="{% url 'restaurants' %}">Рестораны</a></td>
+                <td><a href="{% url 'create_restaurant' %}">Добавить</a></td>
+            </tr>
+            <tr></tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6 offset-sm-1">
+        <div class="container">
+            <h3>Последние действия</h3>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Запись</th>
+                <th>Время</th>
+                <th>Пользователь</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for version in versions %}
+            <tr>
+                {% if version.object.is_order %}
+                <td>
+                    <a href="{% url 'update_order' version.object.pk %}">Заказ №{{ version.object }}</a>
+                    {% if version.field_dict.status == 'delivered' %}
+                    <small class="text-muted">доставлен</small>
+                    {% elif version.field_dict.status == 'paid' %}
+                    <small class="text-muted">оплачен</small>
+                    {% elif version.field_dict.status == 'created' %}
+                    <small class="text-muted">создан</small>
+                    {% elif version.field_dict.status == 'canceled' %}
+                    <small class="text-muted">отменен</small>
+                    {% endif %}
+                </td>
+                {% elif version.object.is_employee %}
+                <td>
+                    <a href="{% url 'update_employee' version.object.pk %}">{{ version.object }}</a>
+                    {% if version.field_dict.position == 'operator' %}
+                    <small class="text-muted">оператор</small>
+                    {% else %}
+                    <small class="text-muted">администратор</small>
+                    {% endif %}
+                </td>
+                {% else %}
+                <td>{{ version.object }}</td>
+                {% endif %}
+                <td>{{ version.revision.date_created }}</td>
+                <td>{{ version.revision.user }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

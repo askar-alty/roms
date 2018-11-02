@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Список заказов{% endblock %}
+{% block content %}
+
+<div class="container">
+    <h4 class="display-4">Заказы</h4>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{% url 'create_order' %}"><span class="btn btn-default">Добавить</span></a>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Город</th>
+                    <th>Ресторан</th>
+                    <th>Сотрудник</th>
+                    <th>Блюды</th>
+                    <th>Общая стоимость (руб.)</th>
+                    <th>ствтус</th>
+                    <th>Обновлен</th>
+                    <th>Создан</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>
+                        {{ order.restaurant.city }}
+                    </td>
+                    <td>
+                        {{ order.restaurant }}
+                    </td>
+                    <td>
+                        {{ order.employee }}
+                    </td>
+                    <td>
+                        <ul>
+                            {% for dish in order.dishes.all %}
+                            <li>{{ dish }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        {{ order.total_amount }}
+                    </td>
+                    <td>
+                        {{ order.status }}
+                    </td>
+                    <td>
+                        {{ order.updated_at }}
+                    </td>
+                    <td>
+                        {{ order.created_at }}
+                    </td>
+                    <td><a href="{% url 'update_order' order.pk %}">Изменить</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {% include 'includes/pagination.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

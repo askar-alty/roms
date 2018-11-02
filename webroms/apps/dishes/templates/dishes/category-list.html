@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Список категорий блюд{% endblock %}
+{% block content %}
+<div class="container">
+    <h4 class="display-4">Категории блюд</h4>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{% url 'create_category' %}"><span class="btn btn-default">Добавить</span></a>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Название</th>
+            <th>Категория</th>
+            <th>Описание</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+        <tr>
+            <td>
+                {{ category.title }}
+            </td>
+            <td>
+                {{ category.sub_category }}
+            </td>
+            <td>
+                {{ category.description }}
+            </td>
+            <td><a href="{% url 'update_category' category.pk %}">Изменить</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

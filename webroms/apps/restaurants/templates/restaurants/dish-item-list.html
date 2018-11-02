@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Блюдо из меню{% endblock %}
+{% block content %}
+<div class="container">
+    <h4 class="display-4">Блюды к заказу</h4>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{% url 'create_dish_item' %}"><span class="btn btn-default">Добавить</span></a>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Блюдо</th>
+                    <th>Количество</th>
+                    <th>Общая стоимость (руб.)</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for dish_item in dish_items %}
+                <tr>
+                    <td>
+                        {{ dish_item.dish }}
+                    </td>
+                    <td>
+                        {{ dish_item.total }}
+                    </td>
+                    <td>
+                        {{ dish_item.price }}
+                    </td>
+                    <td><a href="{% url 'update_dish_item' dish_item.pk %}">Изменить</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {% include 'includes/pagination.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

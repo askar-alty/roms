@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Список ресторанов{% endblock %}
+{% block content %}
+<div class="container">
+    <h4 class="display-4">Рестораны</h4>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{% url 'create_restaurant' %}"><span class="btn btn-default">Добавить</span></a>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Адрес</th>
+                    <th>Город</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for restaurant in restaurants %}
+                <tr>
+                    <td>
+                        {{ restaurant.name }}
+                    </td>
+                    <td>
+                        {{ restaurant.address }}
+                    </td>
+                    <td>
+                        {{ restaurant.city }}
+                    </td>
+                    <td><a href="{% url 'update_restaurant' restaurant.pk %}">Изменить</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {% include 'includes/pagination.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

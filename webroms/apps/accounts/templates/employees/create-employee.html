@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Добавить сотрудника{% endblock %}
+{% block content %}
+
+<div class="container">
+    <h4 class="display-4">Добавить нового сотрудника</h4>
+</div>
+<div class="container">
+    {% if form.errors %}
+    <ul>
+        {% for error in form.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.user.label_tag }}
+            {% render_field form.user class="form-control" %}
+            {{ form.user.help_text }}
+            <div class="form-group">
+                <a href="{% url 'create_user' %}"><span class="oi oi-plus">Добавить</span></a>
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form.position.label_tag }}
+            {% render_field form.position class="form-control" %}
+            {{ form.position.help_text }}
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Сохранить">
+            <a href="{% url 'employees' %}"><samp class="btn">Отмена</samp></a>
+        </div>
+    </form>
+</div>
+{% endblock %}
