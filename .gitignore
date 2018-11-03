@@ -6,5 +6,5 @@ webapp
 # Idea
 .idea
 
-webroms/secrets.json
+### webroms/secrets.json
 webroms/db.sqlite3
