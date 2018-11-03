@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  postgres:
+    restart: always
+    image: postgres:9.6
+    expose: 
+      - 5432
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - pg_backups:/pg_backups
+    environment:
+      - POSTGRES_DB=roms_db
+      - POSTGRES_USER=roms_user
+      - POSTGRES_PASSWORD=roms_pwd
+
+  web:
+    restart: always
+    build:
+      context: ../..
+      dockerfile: ./docker/prod/web/Dockerfile
+    expose:
+      - 8181
+    depends_on:
+      - postgres
+    links:
+      - postgres:postgres
+
+  nginx:
+    restart: always
+    image: nginx:latest
+    ports:
+      - "80:8081"
+    depends_on:
+      - web
+    links:
+      - web:web
+    volumes:
+      - ./nginx/sites-enabled:/etc/nginx/conf.d
+      - ../../webroms/static_root:/opt/webroms/static_root
+
+volumes:
+  pg_data: {}
+  pg_backups: {}

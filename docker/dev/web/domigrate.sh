@@ -1,0 +1,4 @@
+#!/bin/bash
+
+export SECRET_KEY='!86=*ez09+b6@nm03$ml7x4b02n5j)e43t^28vh50av_1a+-dl'
+python manage.py migrate --settings=config.settings.dev
