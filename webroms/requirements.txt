@@ -5,3 +5,5 @@ django-ratelimit==1.1.0
 django-widget-tweaks==1.4.3
 psycopg2==2.7.4
 tzlocal==1.5.1
+gunicorn
+django-heroku
