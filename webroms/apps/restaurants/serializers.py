@@ -44,14 +44,11 @@ class OrderReadSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-ORDER_STATUS_CHOICES = (('created', 'Создан'),)
-
-
 class OrderWriteSerializer(serializers.ModelSerializer):
     restaurant = serializers.PrimaryKeyRelatedField(queryset=models.Restaurant.objects.all())
     employee = serializers.PrimaryKeyRelatedField(queryset=Employee.objects.all())
     dishes = serializers.PrimaryKeyRelatedField(queryset=models.DishItem.objects.all(), many=True)
-    status = serializers.ChoiceField(choices=ORDER_STATUS_CHOICES)
+    status = serializers.ChoiceField(choices=models.ORDER_STATUS_CHOICES)
 
     class Meta:
         model = models.Order

@@ -20,7 +20,37 @@
         - создавать и редактировать заказы
         
     * все зпросы должны посылаться с заголовком  API-TOKEN: <token>
+    
+ 
+#### Деплой на heroku (Demo)
+    
+    Система паботает по адресу: 
+        https://safe-beyond-51488.herokuapp.com
+        https://safe-beyond-51488.herokuapp.com/
+        
+    Учетная запись администратора системы:
+        логин: administrator
+        пароль: qRfcmGoOG0
+        
+    Учетная запись оператора системы:
+        логин: operator
+        пароль: yErKH8yMkq
+        
+  
    
+### Деплой в docker-контейнере 
+
+    
+   1. Переходим в директорию docker/prod
+        ``cd docker/prod``
+   2. Запускаем скрипт docker-compouse 
+        ``up --build -d``
+   3. Заходим во внутрь контейнера
+        ``docker exec -it prod_web_1 bash``
+   4. Запускаем скрипт миграции и создания супер пользователья
+        - ``bash domigrate.sh``
+        - ``bash createsuperuser.sh`` 
    
+  
 
 
